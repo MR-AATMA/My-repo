@@ -1,4 +1,3 @@
-selenium
 aiofiles
 aiohttp
 apscheduler

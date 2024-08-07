@@ -13,7 +13,6 @@ from youtubesearchpython.__future__ import VideosSearch
 from ANNIEMUSIC.utils.database import is_on_off
 from ANNIEMUSIC.utils.formatters import time_to_seconds
 
-
 async def shell_cmd(cmd):
     proc = await asyncio.create_subprocess_shell(
         cmd,
@@ -28,14 +27,14 @@ async def shell_cmd(cmd):
             return errorz.decode("utf-8")
     return out.decode("utf-8")
 
-
 class YouTubeAPI:
-    def __init__(self):
+    def __init__(self, cookies_path=None):
         self.base = "https://www.youtube.com/watch?v="
         self.regex = r"(?:youtube\.com|youtu\.be)"
         self.status = "https://www.youtube.com/oembed?url="
         self.listbase = "https://youtube.com/playlist?list="
         self.reg = re.compile(r"\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])")
+        self.cookies_path = cookies_path
 
     async def exists(self, link: str, videoid: Union[bool, str] = None):
         if videoid:
@@ -127,8 +126,8 @@ class YouTubeAPI:
             "-f",
             "best[height<=?720][width<=?1280]",
             f"{link}",
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
+            stdout=async.subprocess.PIPE,
+            stderr=async.subprocess.PIPE,
         )
         stdout, stderr = await proc.communicate()
         if stdout:
@@ -238,40 +237,44 @@ class YouTubeAPI:
         songvideo: Union[bool, str] = None,
         format_id: Union[bool, str] = None,
         title: Union[bool, str] = None,
+        outtmpl: str = "downloads/%(id)s.%(ext)s"  # Added outtmpl parameter
     ) -> str:
         if videoid:
             link = self.base + link
         loop = asyncio.get_running_loop()
 
+        ydl_opts_common = {
+            "outtmpl": outtmpl,
+            "geo_bypass": True,
+            "nocheckcertificate": True,
+            "quiet": True,
+            "no_warnings": True,
+        }
+        
+        if self.cookies_path:
+            ydl_opts_common["cookiefile"] = self.cookies_path
+
         def audio_dl():
-            ydl_optssx = {
+            ydl_opts = {
+                **ydl_opts_common,
                 "format": "bestaudio/best",
-                "outtmpl": "downloads/%(id)s.%(ext)s",
-                "geo_bypass": True,
-                "nocheckcertificate": True,
-                "quiet": True,
-                "no_warnings": True,
             }
-            x = yt_dlp.YoutubeDL(ydl_optssx)
+            x = yt_dlp.YoutubeDL(ydl_opts)
             info = x.extract_info(link, False)
-            xyz = os.path.join("downloads", f"{info['id']}.{info['ext']}")
+            xyz = outtmpl % {'id': info['id'], 'ext': info['ext']}
             if os.path.exists(xyz):
                 return xyz
             x.download([link])
             return xyz
 
         def video_dl():
-            ydl_optssx = {
+            ydl_opts = {
+                **ydl_opts_common,
                 "format": "bestvideo+bestaudio/best",
-                "outtmpl": "downloads/%(id)s.%(ext)s",
-                "geo_bypass": True,
-                "nocheckcertificate": True,
-                "quiet": True,
-                "no_warnings": True,
             }
-            x = yt_dlp.YoutubeDL(ydl_optssx)
+            x = yt_dlp.YoutubeDL(ydl_opts)
             info = x.extract_info(link, False)
-            xyz = os.path.join("downloads", f"{info['id']}.{info['ext']}")
+            xyz = outtmpl % {'id': info['id'], 'ext': info['ext']}
             if os.path.exists(xyz):
                 return xyz
             x.download([link])
@@ -280,28 +283,22 @@ class YouTubeAPI:
         def song_video_dl():
             formats = f"{format_id}+140"
             fpath = f"downloads/{title}"
-            ydl_optssx = {
+            ydl_opts = {
+                **ydl_opts_common,
                 "format": formats,
                 "outtmpl": fpath,
-                "geo_bypass": True,
-                "nocheckcertificate": True,
-                "quiet": True,
-                "no_warnings": True,
                 "prefer_ffmpeg": True,
                 "merge_output_format": "mp4",
             }
-            x = yt_dlp.YoutubeDL(ydl_optssx)
+            x = yt_dlp.YoutubeDL(ydl_opts)
             x.download([link])
 
         def song_audio_dl():
             fpath = f"downloads/{title}.%(ext)s"
-            ydl_optssx = {
+            ydl_opts = {
+                **ydl_opts_common,
                 "format": format_id,
                 "outtmpl": fpath,
-                "geo_bypass": True,
-                "nocheckcertificate": True,
-                "quiet": True,
-                "no_warnings": True,
                 "prefer_ffmpeg": True,
                 "postprocessors": [
                     {
@@ -311,7 +308,7 @@ class YouTubeAPI:
                     }
                 ],
             }
-            x = yt_dlp.YoutubeDL(ydl_optssx)
+            x = yt_dlp.YoutubeDL(ydl_opts)
             x.download([link])
 
         if songvideo:
@@ -333,8 +330,8 @@ class YouTubeAPI:
                     "-f",
                     "best[height<=?720][width<=?1280]",
                     f"{link}",
-                    stdout=asyncio.subprocess.PIPE,
-                    stderr=asyncio.subprocess.PIPE,
+                    stdout=async.subprocess.PIPE,
+                    stderr=async.subprocess.PIPE,
                 )
                 stdout, stderr = await proc.communicate()
                 if stdout:

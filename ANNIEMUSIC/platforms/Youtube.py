@@ -1,6 +1,7 @@
 import asyncio
 import os
 import re
+import random
 from typing import Union
 
 import yt_dlp
@@ -11,7 +12,13 @@ from youtubesearchpython.__future__ import VideosSearch
 from ANNIEMUSIC.utils.database import is_on_off
 from ANNIEMUSIC.utils.formatters import time_to_seconds
 
-PROXY = 'http://103.170.79.35:8181'  
+# Function to get a random proxy from a file
+def get_random_proxy(file_path):
+    with open(file_path, 'r') as f:
+        proxies = f.read().splitlines()
+    return random.choice(proxies) if proxies else None
+
+PROXY = get_random_proxy("ANNIEMUSIC/assets/annie/pp.txt")
 
 async def shell_cmd(cmd):
     proc = await asyncio.create_subprocess_shell(

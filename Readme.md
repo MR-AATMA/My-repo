@@ -75,10 +75,10 @@
 `curl -fssL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt-get install nodejs -y && npm i -g npm`
 
 - Clone the ANNIE-X-MUSIC repository :
-`git clone https://github.com/doraemon890/ANNIE-X-MUSIC`
+`git clone https://github.com/mrxbroken011/xmv`
 
 - Change directory to YOUR CLONED REPO :
-`cd Inno`
+`cd xmv`
 
 - Install required Python packages :
 `pip3 install -U -r requirements.txt`

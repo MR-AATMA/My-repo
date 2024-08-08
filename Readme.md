@@ -74,7 +74,7 @@
 - Install Node.js from NodeSource :
 `curl -fssL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt-get install nodejs -y && npm i -g npm`
 
-- Clone the ANNIE-X-MUSIC repository :
+- Clone the xmv repository :
 `git clone https://github.com/mrxbroken011/xmv`
 
 - Change directory to YOUR CLONED REPO :

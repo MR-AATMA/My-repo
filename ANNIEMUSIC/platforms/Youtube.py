@@ -230,30 +230,29 @@ class YouTubeAPI:
         return title, duration_min, thumbnail, vidid
 
     async def download(
-        self,
-        link: str,
-        mystic,
-        video: Union[bool, str] = None,
-        videoid: Union[bool, str] = None,
-        songaudio: Union[bool, str] = None,
-        songvideo: Union[bool, str] = None,
-        format_id: Union[bool, str] = None,
-        title: Union[bool, str] = None,
+    self,
+    link: str,
+    mystic,
+    video: Union[bool, str] = None,
+    videoid: Union[bool, str] = None,
+    songaudio: Union[bool, str] = None,
+    songvideo: Union[bool, str] = None,
+    format_id: Union[bool, str] = None,
+    title: Union[bool, str] = None,
     ) -> str:
-        if videoid:
-            link = self.base + link
-        loop = asyncio.get_running_loop()
+    if videoid:
+        link = self.base + link
+    loop = asyncio.get_running_loop()
 
-        def audio_dl():
-            ydl_optssx = {
-                "format": "bestaudio/best",
-                "outtmpl": "downloads/%(id)s.%(ext)s",
-                "geo_bypass": True,
-                "nocheckcertificate": True,
-                "quiet": True,
-                "no_warnings": True,
-                "verbose": True, 
-
+    def audio_dl():
+        ydl_optssx = {
+            "format": "bestaudio/best",
+            "outtmpl": "downloads/%(id)s.%(ext)s",
+            "geo_bypass": True,
+            "nocheckcertificate": True,
+            "quiet": True,
+            "no_warnings": True,
+            "verbose": True,  # Verbose logging
         }
         x = yt_dlp.YoutubeDL(ydl_optssx)
         info = x.extract_info(link, False)
@@ -271,7 +270,7 @@ class YouTubeAPI:
             "nocheckcertificate": True,
             "quiet": True,
             "no_warnings": True,
-            "verbose": True,  # Added verbose logging
+            "verbose": True,  # Verbose logging
         }
         x = yt_dlp.YoutubeDL(ydl_optssx)
         info = x.extract_info(link, False)
@@ -293,7 +292,7 @@ class YouTubeAPI:
             "no_warnings": True,
             "prefer_ffmpeg": True,
             "merge_output_format": "mp4",
-            "verbose": True,  # Added verbose logging
+            "verbose": True,  # Verbose logging
         }
         x = yt_dlp.YoutubeDL(ydl_optssx)
         x.download([link])
@@ -315,7 +314,7 @@ class YouTubeAPI:
                     "preferredquality": "192",
                 }
             ],
-            "verbose": True,  # Added verbose logging
+            "verbose": True,  # Verbose logging
         }
         x = yt_dlp.YoutubeDL(ydl_optssx)
         x.download([link])
@@ -335,9 +334,9 @@ class YouTubeAPI:
         else:
             proc = await asyncio.create_subprocess_exec(
                 "yt-dlp",
+                "-vU",  # Verbose and update check
                 "-g",
-                "-f",
-                "best[height<=?720][width<=?1280]",
+                "-f", "best[height<=?720][width<=?1280]",
                 f"{link}",
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
@@ -351,4 +350,5 @@ class YouTubeAPI:
     else:
         direct = True
         downloaded_file = await loop.run_in_executor(None, audio_dl)
+
     return downloaded_file, direct

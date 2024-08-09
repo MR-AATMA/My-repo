@@ -59,6 +59,6 @@ telegraph
 tgcrypto
 unidecode
 wget
-git+https://github.com/mrxbroken011/yt-dlp@master
-git+https://github.com/joetats/youtube_search
-git+https://github.com/alexmercerind/youtube-search-python
+yt-dlp
+youtube_search
+youtube-search-python

@@ -30,7 +30,7 @@ HEROKU_APP_NAME = getenv("HEROKU_APP_NAME")
 HEROKU_API_KEY = getenv("HEROKU_API_KEY")
 UPSTREAM_REPO = getenv("UPSTREAM_REPO", "https://github.com/MRXBROKEN011/xmv.git")
 UPSTREAM_BRANCH = getenv("UPSTREAM_BRANCH", "Master")
-GIT_TOKEN = getenv("GIT_TOKEN", "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")
+GIT_TOKEN = getenv("GIT_TOKEN", "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")
 
 # Support and contact information - Provide your own support channels
 SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/KGF_ROCY")

@@ -34,7 +34,7 @@ GIT_TOKEN = getenv("GIT_TOKEN", "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")
 
 # Support and contact information - Provide your own support channels
 SUPPORT_CHANNEL = getenv("SUPPORT_CHANNEL", "https://t.me/KGF_ROCY")
-SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/singing_chating_fughting_group")
+SUPPORT_CHAT = getenv("SUPPORT_CHAT", "https://t.me/+YB6Ga4v9wxNjYWY9")
 
 # Set this to True if you want the assistant to automatically leave chats after an interval
 AUTO_LEAVING_ASSISTANT = bool(getenv("AUTO_LEAVING_ASSISTANT", False))

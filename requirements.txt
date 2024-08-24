@@ -1,6 +1,7 @@
 aiofiles
 aiohttp
 asyncio
+apscheduler
 bard
 beautifulsoup4
 bs4

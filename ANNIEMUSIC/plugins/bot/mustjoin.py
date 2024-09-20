@@ -5,7 +5,7 @@ from ANNIEMUSIC import app
 
 #--------------------------
 
-MUST_JOIN = "+I3UkkracnpI5ZTk1"
+MUST_JOIN = "KGF_ROCY"
 #------------------------
 
 @app.on_message(filters.incoming & filters.private, group=-1)

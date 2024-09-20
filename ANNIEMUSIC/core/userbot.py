@@ -11,7 +11,7 @@ assistantids = []
 class Userbot(Client):
     def __init__(self):
         self.one = Client(
-            name="Hot_me_pro",
+            name="Annie1",
             api_id=config.API_ID,
             api_hash=config.API_HASH,
             session_string=str(config.STRING1),
@@ -76,7 +76,7 @@ class Userbot(Client):
             try:
                 await self.two.join_chat("BROKENXNETWORK")
                 
-                await self.one.join_chat("ABOUTBROKENX")
+                await self.two.join_chat("ABOUTBROKENX")
             except:
                 pass
             assistants.append(2)
@@ -98,7 +98,7 @@ class Userbot(Client):
             try:
                 await self.three.join_chat("BROKENXNETWORK")
                 
-                await self.one.join_chat("ABOUTBROKENX")
+                await self.three.join_chat("ABOUTBROKENX")
             except:
                 pass
             assistants.append(3)
@@ -120,7 +120,7 @@ class Userbot(Client):
             try:
                 await self.four.join_chat("BROKENXNETWORK")
                 
-                await self.one.join_chat("ABOUTBROKENX")
+                await self.four.join_chat("ABOUTBROKENX")
             except:
                 pass
             assistants.append(4)
@@ -142,7 +142,7 @@ class Userbot(Client):
             try:
                 await self.five.join_chat("BROKENXNETWORK")
                 
-                await self.one.join_chat("ABOUTBROKENX")
+                await self.five.join_chat("ABOUTBROKENX")
             except:
                 pass
             assistants.append(5)
